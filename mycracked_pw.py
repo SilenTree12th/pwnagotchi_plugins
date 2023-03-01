@@ -6,7 +6,7 @@ import os
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '2.0.1'
+    __version__ = '2.0.3'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
 
@@ -16,19 +16,22 @@ class MyCrackedPasswords(plugins.Plugin):
     def on_handshake(self, agent, filename, access_point, client_station):
         if not os.path.exists('/home/pi/wordlists/'):
             os.makedirs('/home/pi/wordlists/')
+            
         # start with blank file
         open('/home/pi/wordlists/mycracked.txt', 'w+').close()
-        f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+')
+        
         all_lines=[]
-        for line in f:
-            pwd=line.split(':')[-1]
-            all_lines.append(pwd)
+        f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+')
+        for line_f in f:
+            pwd_f = line_f.split(':')[-1]
+            all_lines.append(pwd_f)
         f.close()
+        
         h=open('/root/handshakes/onlinehashcrack.cracked', 'r+')
-        for line in h:
-            pwd=line.split(',')[-2][1:-1]
-            if pwd:
-                all_lines.append(pwd)
+        for line_h in h:
+            pwd_h = line_h.split(',')[-2]
+            if len(pwd_h) > 2:
+                all_lines.append(pwd_h[1:-1])
         h.close()
         new_lines = sorted(set(all_lines))
         g=open('/home/pi/wordlists/mycracked.txt','w+')
