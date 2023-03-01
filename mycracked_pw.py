@@ -7,14 +7,11 @@ import os
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '2.1.1'
+    __version__ = '3.0.0'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
 
     def on_loaded(self):
-        logging.info("mycracked_pw loaded")
-
-    def on_handshake(self, agent, filename, access_point, client_station):
         if not os.path.exists('/home/pi/wordlists/'):
             os.makedirs('/home/pi/wordlists/')
             
@@ -41,4 +38,4 @@ class MyCrackedPasswords(plugins.Plugin):
                 g.write(i+"")
         g.close()
         
-        logging.info("mycracked.txt updated")
+        logging.info("[mycracked_pw] pw list updated")
