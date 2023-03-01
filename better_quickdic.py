@@ -61,7 +61,6 @@ class QuickDic(plugins.Plugin):
             if result2 != "KEY NOT FOUND":
                 key = re.search(r'\[(.*)\]', result2)
                 pwd = str(key.group(1))
-                logging.warning('Password cracked! -> %s', pwd)
                 self.text_to_set = "Cracked password: " + pwd
                 display.update(force=True)
                 plugins.on('cracked', access_point, pwd)
@@ -70,4 +69,5 @@ class QuickDic(plugins.Plugin):
         if self.text_to_set:
             ui.set('face', self.options['face'])
             ui.set('status', self.text_to_set)
+            logging.warning('!!! [quickdic] !!! %s', self.text_to_set)
             self.text_to_set = ""
