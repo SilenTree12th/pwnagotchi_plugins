@@ -6,7 +6,7 @@ import os
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '2.0.0'
+    __version__ = '2.0.1'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
 
@@ -19,16 +19,17 @@ class MyCrackedPasswords(plugins.Plugin):
         # start with blank file
         open('/home/pi/wordlists/mycracked.txt', 'w+').close()
         f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+')
-        h=open('/root/handshakes/onlinehashcrack.cracked', 'r+')
         all_lines=[]
         for line in f:
             pwd=line.split(':')[-1]
             all_lines.append(pwd)
+        f.close()
+        h=open('/root/handshakes/onlinehashcrack.cracked', 'r+')
         for line in h:
             pwd=line.split(',')[-2][1:-1]
             if pwd:
                 all_lines.append(pwd)
-        f.close()
+        h.close()
         new_lines = sorted(set(all_lines))
         g=open('/home/pi/wordlists/mycracked.txt','w+')
         with open('/home/pi/wordlists/mycracked.txt','w+') as g:
