@@ -13,8 +13,8 @@ Cracked handshakes stored in handshake folder as [essid].pcap.cracked
 
 
 class QuickDic(plugins.Plugin):
-    __author__ = 'pwnagotchi [at] rossmarks [dot] uk'
-    __version__ = '2.0.0'
+    __author__ = 'silentree12th'
+    __version__ = '1.0.1'
     __license__ = 'GPL3'
     __description__ = 'Run a quick dictionary scan against captured handshakes'
     __dependencies__ = {
@@ -61,7 +61,7 @@ class QuickDic(plugins.Plugin):
             if result2 != "KEY NOT FOUND":
                 key = re.search(r'\[(.*)\]', result2)
                 pwd = str(key.group(1))
-                logging.warning('Password cracked! - ' + pwd)
+                logging.warning('Password cracked! -> %s', pwd)
                 self.text_to_set = "Cracked password: " + pwd
                 display.update(force=True)
                 plugins.on('cracked', access_point, pwd)
