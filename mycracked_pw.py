@@ -1,12 +1,13 @@
 import pwnagotchi.plugins as plugins
 import pwnagotchi
 import logging
+import csv
 import os
 
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '2.0.3'
+    __version__ = '2.1.0'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
 
@@ -23,15 +24,15 @@ class MyCrackedPasswords(plugins.Plugin):
         all_lines=[]
         f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+')
         for line_f in f:
-            pwd_f = line_f.split(':')[-1]
-            all_lines.append(pwd_f)
+            pwd_f = line_f.split(':')
+            all_lines.append(pwd_f[-1])
         f.close()
         
-        h=open('/root/handshakes/onlinehashcrack.cracked', 'r+')
-        for line_h in h:
-            pwd_h = line_h.split(',')[-2]
-            if len(pwd_h) > 2:
-                all_lines.append(pwd_h[1:-1])
+        h = open('/root/handshakes/onlinehashcrack.cracked', 'r+')
+            for line_h in csv.DictReader(h):
+                pwd_h = line_h['password']
+                if pwd_h != None:
+                    all_lines.append(pwd_h)
         h.close()
         new_lines = sorted(set(all_lines))
         g=open('/home/pi/wordlists/mycracked.txt','w+')
