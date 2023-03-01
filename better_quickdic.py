@@ -14,7 +14,7 @@ Cracked handshakes stored in handshake folder as [essid].pcap.cracked
 
 class QuickDic(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.0.2'
+    __version__ = '1.0.3'
     __license__ = 'GPL3'
     __description__ = 'Run a quick dictionary scan against captured handshakes'
     __dependencies__ = {
@@ -39,7 +39,7 @@ class QuickDic(plugins.Plugin):
             ('/usr/bin/dpkg -l aircrack-ng | grep aircrack-ng | awk \'{print $2, $3}\''), shell=True, stdout=subprocess.PIPE)
         check = check.stdout.decode('utf-8').strip()
         if check != "aircrack-ng <none>":
-            logging.info('[quickdic] Found %s', check)
+            logging.info('[quickdic] Found %s' %check)
         else:
             logging.warning('[quickdic] aircrack-ng is not installed!')
 
@@ -57,7 +57,7 @@ class QuickDic(plugins.Plugin):
                 'wordlist_folder'] + '*.txt | sed \'s/ /,/g\'` -l ' + filename + '.cracked -q -b ' + result + ' ' + filename + ' | grep KEY'),
                 shell=True, stdout=subprocess.PIPE)
             result2 = result2.stdout.decode('utf-8').strip()
-            logging.info('[quickdic] %s', result2)
+            logging.info('[quickdic] %s' %result2)
             if result2 != "KEY NOT FOUND":
                 key = re.search(r'\[(.*)\]', result2)
                 pwd = str(key.group(1))
@@ -69,5 +69,5 @@ class QuickDic(plugins.Plugin):
         if self.text_to_set:
             ui.set('face', self.options['face'])
             ui.set('status', self.text_to_set)
-            logging.warning('!!! [quickdic] !!! %s', self.text_to_set)
+            logging.warning('!!! [quickdic] !!! %s' %self.text_to_set)
             self.text_to_set = ""
