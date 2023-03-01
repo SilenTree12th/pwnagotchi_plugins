@@ -6,7 +6,7 @@ import os
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '1.0.1'
+    __version__ = '1.0.2'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
 
@@ -30,3 +30,5 @@ class MyCrackedPasswords(plugins.Plugin):
             for i in new_lines:
                 g.write(i+"")
         g.close()
+        
+        logging.info("mycracked.txt updated")
