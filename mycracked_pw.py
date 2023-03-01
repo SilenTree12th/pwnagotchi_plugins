@@ -7,7 +7,7 @@ import os
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '2.1.0'
+    __version__ = '2.1.1'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
 
@@ -29,10 +29,10 @@ class MyCrackedPasswords(plugins.Plugin):
         f.close()
         
         h = open('/root/handshakes/onlinehashcrack.cracked', 'r+')
-            for line_h in csv.DictReader(h):
-                pwd_h = line_h['password']
-                if pwd_h != None:
-                    all_lines.append(pwd_h)
+        for line_h in csv.DictReader(h):
+            pwd_h = line_h['password']
+            if pwd_h != None:
+                all_lines.append(pwd_h)
         h.close()
         new_lines = sorted(set(all_lines))
         g=open('/home/pi/wordlists/mycracked.txt','w+')
