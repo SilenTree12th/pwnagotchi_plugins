@@ -10,11 +10,12 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '4.2.7'
+    __version__ = '4.2.8'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
 
     def on_loaded(self):
+        logging.info("[mycracked_pw] loaded]")
         if not os.path.exists('/home/pi/wordlists/'):
             os.makedirs('/home/pi/wordlists/')
             
@@ -77,5 +78,5 @@ class MyCrackedPasswords(plugins.Plugin):
                 with open(filepath, 'w+') as file:
                     qr_code.print_ascii(out=file)
             except:
-                logging.error("%s could not be generated as qrcode" %filename)
+                logging.info("%s could not be generated as qrcode" % filename)
         logging.info("[mycracked_pw] qrcodes generated. use cat file to see it.")
