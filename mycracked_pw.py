@@ -1,13 +1,13 @@
 import pwnagotchi.plugins as plugins
 import logging
-import qrcode
+# import qrcode
 import csv
 import os
 
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '4.1.1'
+    __version__ = '4.2.0'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
     __defaults__ = {
@@ -78,24 +78,26 @@ class MyCrackedPasswords(plugins.Plugin):
                 g.write(i+"")
         
         logging.info("[mycracked_pw] pw list updated")
+
+
         
-        #save all the wifi-qrcodes
-        security="WPA"
-        for ssid,password,bssid in zip(all_ssid, all_passwd, all_bssid):
-            wifi_config = f"WIFI:S:{ssid};T:{security};P:{password};;"
+        # #save all the wifi-qrcodes
+        # security="WPA"
+        # for ssid,password,bssid in zip(all_ssid, all_passwd, all_bssid):
+        #     wifi_config = f"WIFI:S:{ssid};T:{security};P:{password};;"
             
-            # Create the QR code object
-            qr_code = qrcode.QRCode(
-                version=None,
-                error_correction=qrcode.constants.ERROR_CORRECT_L,
-                box_size=10,
-                border=4,
-            )
-            qr_code.add_data(wifi_config)
-            qr_code.make(fit=True)
+        #     # Create the QR code object
+        #     qr_code = qrcode.QRCode(
+        #         version=None,
+        #         error_correction=qrcode.constants.ERROR_CORRECT_L,
+        #         box_size=10,
+        #         border=4,
+        #     )
+        #     qr_code.add_data(wifi_config)
+        #     qr_code.make(fit=True)
             
-            filename = f"{ssid}-{bssid}.txt"
-            path_qrcode = os.path.join(qrcodes_folder, filename)
-            with open(path_qrcode, 'w+') as file:
-                qr_code.print_ascii(out=file)
-        logging.info("[mycracked_pw] qrcodes generated. use cat file to see it.")
+        #     filename = f"{ssid}-{bssid}.txt"
+        #     path_qrcode = os.path.join(qrcodes_folder, filename)
+        #     with open(path_qrcode, 'w+') as file:
+        #         qr_code.print_ascii(out=file)
+        # logging.info("[mycracked_pw] qrcodes generated. use cat file to see it.")
