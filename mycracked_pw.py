@@ -1,13 +1,12 @@
 import pwnagotchi.plugins as plugins
 import logging
-# import qrcode
 import csv
 import os
 
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '4.2.2'
+    __version__ = '4.2.3'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
     __defaults__ = {
@@ -54,16 +53,16 @@ class MyCrackedPasswords(plugins.Plugin):
                 all_ssid.append(pwd_f[-2])
             f.close()
         else:
-            logging.info('[mycracked_pw] no cracked pw for wpa-sec found')
+            logging.info('[mycracked_pw] no cracked pw list from wpa-sec found')
         
         onlinehashcrack = '/root/handshakes/onlinehashcrack.cracked'
         if os.path.exists(onlinehashcrack):
-            h = open(onlinehashcrack, 'r+')
+            h = open(onlinehashcrack, 'r+', encoding='utf-8')
             for line_h in csv.DictReader(h):
                 pwd_h = line_h['password']
                 bssid_h = line_h['BSSID']
                 ssid_h = line_h['ESSID']
-                if pwd_h != None:
+                if pwd_h and bssid_h and ssid_h:
                     all_passwd.append(pwd_h)
                     all_bssid.append(bssid_h)
                     all_ssid.append(ssid_h)
