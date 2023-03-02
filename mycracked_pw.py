@@ -1,7 +1,7 @@
 import pwnagotchi.plugins as plugins
 import logging
 # import qrcode
-# import csv
+import csv
 import os
 
 
