@@ -7,7 +7,7 @@ import os
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '4.2.4'
+    __version__ = '4.2.5'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
     __defaults__ = {
@@ -18,6 +18,7 @@ class MyCrackedPasswords(plugins.Plugin):
     }
 
     def on_loaded(self):
+        logging.info('[mycracked_pw] loaded')
         if 'face' not in self.options:
             self.options['face'] = '(uωu)'
         if 'wordlist_folder' not in self.options:
