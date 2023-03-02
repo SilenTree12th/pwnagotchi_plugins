@@ -10,9 +10,9 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '4.2.9'
+    __version__ = '4.2.11'
     __license__ = 'GPL3'
-    __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
+    __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin. it stores it in the home directory so you can easily read it with cat'
 
     def on_loaded(self):
         logging.info("[mycracked_pw] loaded]")
@@ -28,15 +28,15 @@ class MyCrackedPasswords(plugins.Plugin):
         all_passwd=[]
         all_bssid=[]
         all_ssid=[]
-        f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+')
+        f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+', encoding='utf-8')
         for line_f in f:
             pwd_f = line_f.split(':')
-            all_passwd.append(pwd_f[-1])
+            all_passwd.append(pwd_f[-1].rstrip('\n'))
             all_bssid.append(pwd_f[0])
             all_ssid.append(pwd_f[-2])
         f.close()
         
-        h = open('/root/handshakes/onlinehashcrack.cracked', 'r+')
+        h = open('/root/handshakes/onlinehashcrack.cracked', 'r+', encoding='utf-8')
         for line_h in csv.DictReader(h):
             pwd_h = line_h['password']
             bssid_h = line_h['BSSID']
@@ -78,5 +78,5 @@ class MyCrackedPasswords(plugins.Plugin):
                 with open(filepath, 'w+') as file:
                     qr_code.print_ascii(out=file)
             except:
-                logging.info("%s could not be generated as qrcode" % filename)
+                logging.error("[mycracked_pw] something went wrong")
         logging.info("[mycracked_pw] qrcodes generated. use cat file to see it.")
