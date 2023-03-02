@@ -10,7 +10,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '4.2.6'
+    __version__ = '4.2.7'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin'
 
@@ -38,9 +38,9 @@ class MyCrackedPasswords(plugins.Plugin):
         h = open('/root/handshakes/onlinehashcrack.cracked', 'r+')
         for line_h in csv.DictReader(h):
             pwd_h = line_h['password']
-            bssid_h = line_h['BSSID']
-            ssid_h = line_h['ESSID']
-            if pwd_h != None:
+            bssid_h = line_h['BSSID'][1:-1]
+            ssid_h = line_h['ESSID'][1:-1]
+            if pwd_h and bssid_h and ssid_h:
                 all_passwd.append(pwd_h)
                 all_bssid.append(bssid_h)
                 all_ssid.append(ssid_h)
@@ -73,6 +73,9 @@ class MyCrackedPasswords(plugins.Plugin):
             
             filename = f"{ssid}-{bssid}.txt"
             filepath = os.path.join("/home/pi/qrcodes/", filename)
-            with open(filepath, 'w+') as file:
-                qr_code.print_ascii(out=file)
+            try:
+                with open(filepath, 'w+') as file:
+                    qr_code.print_ascii(out=file)
+            except:
+                logging.error("%s could not be generated as qrcode" %filename)
         logging.info("[mycracked_pw] qrcodes generated. use cat file to see it.")
