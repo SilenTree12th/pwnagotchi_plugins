@@ -12,7 +12,7 @@ class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
     __version__ = '5.0.1'
     __license__ = 'GPL3'
-    __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin. it stores it in the home directory so you can easily read it with cat'
+    __description__ = 'A plugin to grab all cracked passwords and creates wifi qrcodes and a wordlist which can be used for the quickdic plugin. It stores them in the home directory. Read with cat'
 
     def on_loaded(self):
         logging.info("[mycracked_pw] loaded]")
