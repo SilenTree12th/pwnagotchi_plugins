@@ -10,7 +10,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '4.2.13'
+    __version__ = '4.3.0'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin. it stores it in the home directory so you can easily read it with cat'
 
@@ -29,19 +29,22 @@ class MyCrackedPasswords(plugins.Plugin):
         all_bssid=[]
         all_ssid=[]
         f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+', encoding='utf-8')
-        for line_f in f:
-            pwd_f = line_f.split(':')
-            all_passwd.append(pwd_f[-1].rstrip('\n'))
-            all_bssid.append(pwd_f[0])
-            all_ssid.append(pwd_f[-2])
+        try:
+            for line_f in f:
+                pwd_f = line_f.split(':')
+                all_passwd.append(str(pwd_f[-1].rstrip('\n')))
+                all_bssid.append(str(pwd_f[0]))
+                all_ssid.append(str(pwd_f[-2]))
+        except:
+            logging.error('[mycracked_pw] encountered a problem in wpa-sec.cracked.potfile')
         f.close()
         
         h = open('/root/handshakes/onlinehashcrack.cracked', 'r+', encoding='utf-8')
         try:
             for line_h in csv.DictReader(h):
-                pwd_h = line_h['password']
-                bssid_h = line_h['BSSID']
-                ssid_h = line_h['ESSID']
+                pwd_h = str(line_h['password'])
+                bssid_h = str(line_h['BSSID'])
+                ssid_h = str(line_h['ESSID'])
                 if pwd_h and bssid_h and ssid_h:
                     all_passwd.append(pwd_h)
                     all_bssid.append(bssid_h)
@@ -52,18 +55,16 @@ class MyCrackedPasswords(plugins.Plugin):
         
         #create pw list
         new_lines = sorted(set(all_passwd))
-        g=open('/home/pi/wordlists/mycracked.txt','w+')
         with open('/home/pi/wordlists/mycracked.txt','w+') as g:
             for i in new_lines:
-                g.write(i+"")
-        g.close()
+                g.write(i+"\n")
         
         logging.info("[mycracked_pw] pw list updated")
         
         #save all the wifi-qrcodes
         security="WPA"
         for ssid,password,bssid in zip(all_ssid, all_passwd, all_bssid):
-            wifi_config = f"WIFI:S:{ssid};T:{security};P:{password};;"
+            wifi_config = 'WIFI:S:'+ssid+';T:'+security+';P:'+password+';;'
             
             # Create the QR code object
             qr_code = qrcode.QRCode(
@@ -75,8 +76,8 @@ class MyCrackedPasswords(plugins.Plugin):
             qr_code.add_data(wifi_config)
             qr_code.make(fit=True)
             
-            filename = str(ssid)+'-'+str(password)+'.txt'
-            filepath = '/home/pi/qrcodes/'+str(filename)
+            filename = ssid+'-'+password+'.txt'
+            filepath = '/home/pi/qrcodes/'+filename
             try:
                 with open(filepath, 'w+') as file:
                     qr_code.print_ascii(out=file)
