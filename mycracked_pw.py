@@ -10,7 +10,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '5.0.4'
+    __version__ = '5.1.0'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab all cracked passwords and creates wifi qrcodes and a wordlist which can be used for the quickdic plugin. It stores them in the home directory. Read with cat'
 
@@ -22,9 +22,13 @@ class MyCrackedPasswords(plugins.Plugin):
         if not os.path.exists('/home/pi/qrcodes/'):
             os.makedirs('/home/pi/qrcodes/')
             
-        # start with blank file
-        open('/home/pi/wordlists/mycracked.txt', 'w+').close()
+        self._update_all()
         
+    def on_handshake(self, agent, filename, access_point, client_station):
+        self._update_all()
+        
+        
+    def _update_all(self):
         all_passwd=[]
         all_bssid=[]
         all_ssid=[]
@@ -52,14 +56,6 @@ class MyCrackedPasswords(plugins.Plugin):
         except:
             logging.error('[mycracked_pw] encountered a problem in onlinehashcrack.cracked')
         h.close()
-        
-        #create pw list
-        new_lines = sorted(set(all_passwd))
-        with open('/home/pi/wordlists/mycracked.txt','w+') as g:
-            for i in new_lines:
-                g.write(i+"\n")
-        
-        logging.info("[mycracked_pw] pw list updated")
         
         #save all the wifi-qrcodes
         security="WPA"
@@ -94,3 +90,15 @@ class MyCrackedPasswords(plugins.Plugin):
             except:
                 logging.error("[mycracked_pw] something went wrong generating qrcode")
         logging.info("[mycracked_pw] qrcodes generated.")
+
+                    
+        # start with blank file
+        open('/home/pi/wordlists/mycracked.txt', 'w+').close()
+        
+        #create pw list
+        new_lines = sorted(set(all_passwd))
+        with open('/home/pi/wordlists/mycracked.txt','w+') as g:
+            for i in new_lines:
+                g.write(i+"\n")
+        
+        logging.info("[mycracked_pw] pw list updated")
