@@ -10,7 +10,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '4.3.3'
+    __version__ = '4.3.4'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin. it stores it in the home directory so you can easily read it with cat'
 
@@ -86,9 +86,10 @@ class MyCrackedPasswords(plugins.Plugin):
             try:
                 with open(filepath, 'w+') as file:
                     qr_code.print_ascii(out=file)
-                    contents = file.read()
+                    q = io.StringIO()
+                    qr_code.print_ascii(out=q)
                     logging.info(filename)
-                    logging.info(contents)
+                    logging.info(q.read())
             except:
                 logging.error("[mycracked_pw] something went wrong generating qrcode")
-        logging.info("[mycracked_pw] qrcodes generated. use cat file to see it.")
+        logging.info("[mycracked_pw] qrcodes generated.")
