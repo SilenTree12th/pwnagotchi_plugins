@@ -14,7 +14,7 @@ Cracked handshakes stored in handshake folder as [essid].pcap.cracked
 
 class QuickDic(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.1.1'
+    __version__ = '1.1.2'
     __license__ = 'GPL3'
     __description__ = 'Run a quick dictionary scan against captured handshakes'
     __dependencies__ = {
@@ -73,5 +73,5 @@ class QuickDic(plugins.Plugin):
         if self.text_to_set:
             ui.set('face', self.options['face'])
             ui.set('status', self.text_to_set)
-            logging.warning('!!! [quickdic] !!! %s' %self.text_to_set)
+            logging.warning('!!! [quickdic] !!! %s' % self.text_to_set)
             self.text_to_set = ""
