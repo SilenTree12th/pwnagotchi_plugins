@@ -10,7 +10,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '5.0.0'
+    __version__ = '5.0.1'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin. it stores it in the home directory so you can easily read it with cat'
 
@@ -23,11 +23,11 @@ class MyCrackedPasswords(plugins.Plugin):
             os.makedirs('/home/pi/qrcodes/')
         self._update_all()
         
-    def on_internet_available(self, agent):
-        display = agent.view()
+    def on_sleep(self):
         self._update_all()
-        display.set('status', f"Updated wordlist and qrcodes. Check them out on home directory!")
-        display.update(force=True)
+        
+    def on_wait(self)
+        self._update_all()
         
     def _update_all(self):
         # start with blank file
