@@ -10,7 +10,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '4.2.12'
+    __version__ = '4.2.13'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab and sort all cracked passwords to use with quickdic-plugin. it stores it in the home directory so you can easily read it with cat'
 
@@ -75,8 +75,8 @@ class MyCrackedPasswords(plugins.Plugin):
             qr_code.add_data(wifi_config)
             qr_code.make(fit=True)
             
-            filename = f"{ssid}-{bssid}.txt"
-            filepath = os.path.join("/home/pi/qrcodes/", filename)
+            filename = str(ssid)+'-'+str(password)+'.txt'
+            filepath = '/home/pi/qrcodes/'+str(filename)
             try:
                 with open(filepath, 'w+') as file:
                     qr_code.print_ascii(out=file)
