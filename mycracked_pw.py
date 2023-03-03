@@ -10,7 +10,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '5.0.3'
+    __version__ = '5.0.4'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab all cracked passwords and creates wifi qrcodes and a wordlist which can be used for the quickdic plugin. It stores them in the home directory. Read with cat'
 
@@ -21,15 +21,7 @@ class MyCrackedPasswords(plugins.Plugin):
             
         if not os.path.exists('/home/pi/qrcodes/'):
             os.makedirs('/home/pi/qrcodes/')
-        self._update_all()
-        
-    def on_sleep(self):
-        self._update_all()
-        
-    def on_wait(self):
-        self._update_all()
-        
-    def _update_all(self):
+            
         # start with blank file
         open('/home/pi/wordlists/mycracked.txt', 'w+').close()
         
