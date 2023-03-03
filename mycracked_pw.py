@@ -21,7 +21,15 @@ class MyCrackedPasswords(plugins.Plugin):
             
         if not os.path.exists('/home/pi/qrcodes/'):
             os.makedirs('/home/pi/qrcodes/')
-            
+        self._update_all()
+        
+    def on_internet_available(self, agent):
+        display = agent.view()
+        self._update_all()
+        display.set('status', f"Updated wordlist and qrcodes. Check them out on home directory!")
+        display.update(force=True)
+        
+    def _update_all(self):
         # start with blank file
         open('/home/pi/wordlists/mycracked.txt', 'w+').close()
         
