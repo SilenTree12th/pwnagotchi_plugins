@@ -66,7 +66,7 @@ class QuickDic(plugins.Plugin):
                 key = re.search(r'\[(.*)\]', result2)
                 pwd = str(key.group(1))
                 self.text_to_set = "Cracked password: " + pwd
-                logging.warning('!!! [quickdic] !!! %s' % self.text_to_set)
+                #logging.warning('!!! [quickdic] !!! %s' % self.text_to_set)
                 display.set('face', self.options['face'])
                 display.set('status', self.text_to_set)
                 self.text_to_set = ""
