@@ -10,7 +10,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '5.1.2'
+    __version__ = '5.1.3'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab all cracked passwords and creates wifi qrcodes and a wordlist which can be used for the quickdic plugin. It stores them in the home directory. Read with cat'
 
@@ -40,9 +40,10 @@ class MyCrackedPasswords(plugins.Plugin):
                 all_passwd.append(str(pwd_f[-1].rstrip('\n')))
                 all_bssid.append(str(pwd_f[0]))
                 all_ssid.append(str(pwd_f[-2]))
+            f.close()
         except:
             logging.error('[mycracked_pw] encountered a problem in wpa-sec.cracked.potfile')
-        f.close()
+        
         
         
         try:
@@ -55,9 +56,10 @@ class MyCrackedPasswords(plugins.Plugin):
                     all_passwd.append(pwd_h)
                     all_bssid.append(bssid_h)
                     all_ssid.append(ssid_h)
+            h.close()
         except:
             logging.error('[mycracked_pw] encountered a problem in onlinehashcrack.cracked')
-        h.close()
+        
         
         #save all the wifi-qrcodes
         security="WPA"
