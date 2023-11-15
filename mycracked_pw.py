@@ -10,7 +10,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '5.1.1'
+    __version__ = '5.1.2'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab all cracked passwords and creates wifi qrcodes and a wordlist which can be used for the quickdic plugin. It stores them in the home directory. Read with cat'
 
@@ -32,8 +32,9 @@ class MyCrackedPasswords(plugins.Plugin):
         all_passwd=[]
         all_bssid=[]
         all_ssid=[]
-        f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+', encoding='utf-8')
+        
         try:
+            f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+', encoding='utf-8')
             for line_f in f:
                 pwd_f = line_f.split(':')
                 all_passwd.append(str(pwd_f[-1].rstrip('\n')))
@@ -43,8 +44,9 @@ class MyCrackedPasswords(plugins.Plugin):
             logging.error('[mycracked_pw] encountered a problem in wpa-sec.cracked.potfile')
         f.close()
         
-        h = open('/root/handshakes/onlinehashcrack.cracked', 'r+', encoding='utf-8')
+        
         try:
+            h = open('/root/handshakes/onlinehashcrack.cracked', 'r+', encoding='utf-8')
             for line_h in csv.DictReader(h):
                 pwd_h = str(line_h['password'])
                 bssid_h = str(line_h['BSSID'])
