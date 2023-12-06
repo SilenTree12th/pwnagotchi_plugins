@@ -5,7 +5,7 @@ import string
 import re
 import qrcode
 import io
-from telegram import Bot
+from telegram import Bot #install with pip install python-telegram-bot
 from telegram import InputFile
 
 '''
