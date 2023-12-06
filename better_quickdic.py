@@ -18,7 +18,7 @@ Cracked handshakes stored in handshake folder as [essid].pcap.cracked
 
 class QuickDic(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.3.2'
+    __version__ = '1.3.3'
     __license__ = 'GPL3'
     __description__ = 'Run a quick dictionary scan against captured handshakes. Optionally send found passwords as qrcode and plain text over to telegram bot.'
     __dependencies__ = {
@@ -44,6 +44,10 @@ class QuickDic(plugins.Plugin):
             self.options['wordlist_folder'] = '/home/pi/wordlists/'
         if 'enabled' not in self.options:
             self.options['enabled'] = False
+        if 'api' not in self.options:
+            self.options['api'] = None
+        if 'id' not in self.options:
+            self.options['id'] = None
             
         check = subprocess.run(
             ('/usr/bin/dpkg -l aircrack-ng | grep aircrack-ng | awk \'{print $2, $3}\''), shell=True, stdout=subprocess.PIPE)
