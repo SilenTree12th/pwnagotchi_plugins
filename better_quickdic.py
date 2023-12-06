@@ -18,7 +18,7 @@ Cracked handshakes stored in handshake folder as [essid].pcap.cracked
 
 class QuickDic(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.3.0'
+    __version__ = '1.3.1'
     __license__ = 'GPL3'
     __description__ = 'Run a quick dictionary scan against captured handshakes. Optionally send found passwords as qrcode and plain text over to telegram bot.'
     __dependencies__ = {
@@ -87,7 +87,7 @@ class QuickDic(plugins.Plugin):
                     chat_id = id
                     try:
                         qr = qrcode.QRCode(
-                            version=1,
+                            version=None,
                             error_correction=qrcode.constants.ERROR_CORRECT_L,
                             box_size=10,
                             border=4,
