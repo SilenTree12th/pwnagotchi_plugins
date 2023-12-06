@@ -2,7 +2,6 @@ import pwnagotchi.plugins as plugins
 import pwnagotchi
 import logging
 import qrcode
-import html
 import csv
 import os
 import io
@@ -10,7 +9,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '5.1.3'
+    __version__ = '5.1.4'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab all cracked passwords and creates wifi qrcodes and a wordlist which can be used for the quickdic plugin. It stores them in the home directory. Read with cat'
 
