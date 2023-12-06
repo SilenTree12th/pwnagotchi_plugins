@@ -17,7 +17,7 @@ Cracked handshakes stored in handshake folder as [essid].pcap.cracked
 
 class QuickDic(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.4.2'
+    __version__ = '1.4.3'
     __license__ = 'GPL3'
     __description__ = 'Run a quick dictionary scan against captured handshakes. Optionally send found passwords as qrcode and plain text over to telegram bot.'
     __dependencies__ = {
@@ -90,7 +90,9 @@ class QuickDic(plugins.Plugin):
     def _send_message(self, filename, pwd):
         try:
             security = "WPA"
-            ssid = filename
+            filename = filename
+            base_filename = os.path.splitext(os.path.basename(filename))[0]
+            ssid = base_filename.split('_')[0]
             password = pwd
             wifi_config = 'WIFI:S:'+ssid+';T:'+security+';P:'+password+';;'
             bot = Bot(token=self.options['api'])
