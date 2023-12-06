@@ -5,6 +5,7 @@ import string
 import re
 import qrcode
 import io
+import os
 from telegram import Bot #install with pip install python-telegram-bot
 
 '''
@@ -17,7 +18,7 @@ Cracked handshakes stored in handshake folder as [essid].pcap.cracked
 
 class QuickDic(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.4.3'
+    __version__ = '1.4.4'
     __license__ = 'GPL3'
     __description__ = 'Run a quick dictionary scan against captured handshakes. Optionally send found passwords as qrcode and plain text over to telegram bot.'
     __dependencies__ = {
