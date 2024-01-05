@@ -9,7 +9,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '5.1.4'
+    __version__ = '5.2.0'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab all cracked passwords and creates wifi qrcodes and a wordlist which can be used for the quickdic plugin. It stores them in the home directory. Read with cat'
 
@@ -49,9 +49,10 @@ class MyCrackedPasswords(plugins.Plugin):
             h = open('/root/handshakes/onlinehashcrack.cracked', 'r+', encoding='utf-8')
             for line_h in csv.DictReader(h):
                 pwd_h = str(line_h['password'])
-                bssid_h = str(line_h['BSSID'])
-                ssid_h = str(line_h['ESSID'])
-                if pwd_h and bssid_h and ssid_h:
+                task_h = str(line_h['task']
+                ssid_h = task_h[0:-20]
+                bssid_h = task_h[-18:-1]
+                if pwd_h and ssid_h and bssid_h:
                     all_passwd.append(pwd_h)
                     all_bssid.append(bssid_h)
                     all_ssid.append(ssid_h)
