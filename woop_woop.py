@@ -105,6 +105,9 @@ class EducationalPurposesOnly(plugins.Plugin):
         subprocess.Popen('wpa_cli -i wlan0 reconfigure', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
         time.sleep(10)
         logging.info('trying to get an IP address on the network via DHCP...')
+        with open("/home/ips.txt", "a") as output_file:
+            subprocess.Popen('dhclient wlan0', shell=True, stdin=None, stdout=output_file, stderr=subprocess.PIPE, executable="/bin/bash")
+            output_file.write(
         subprocess.Popen('dhclient wlan0', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
         time.sleep(10)
         STATUS = 'associated'
