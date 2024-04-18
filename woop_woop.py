@@ -22,7 +22,7 @@ NETWORK = ''
 
 class EducationalPurposesOnly(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.0.0'
+    __version__ = '1.0.1'
     __license__ = 'GPL3'
     __description__ = 'A plugin to automatically authenticate to known networks and perform internal network recon. Saves wifi informations to wpa_supplicant.'
 
@@ -107,7 +107,7 @@ class EducationalPurposesOnly(plugins.Plugin):
         logging.info('[woop-woop] trying to get an IP address on the network via DHCP...')
         with open("/home/ips.txt", "a") as output_file:
             subprocess.Popen('dhclient wlan0', shell=True, stdin=None, stdout=output_file, stderr=subprocess.PIPE, executable="/bin/bash")
-            output_file.write(
+            output_file.write(network_name)
         subprocess.Popen('dhclient wlan0', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
         time.sleep(10)
         STATUS = 'associated'
