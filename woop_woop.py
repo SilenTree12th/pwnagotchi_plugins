@@ -22,7 +22,7 @@ NETWORK = ''
 
 class EducationalPurposesOnly(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '1.0.2'
+    __version__ = '1.0.3'
     __license__ = 'GPL3'
     __description__ = 'A plugin to automatically authenticate to known networks and perform internal network recon. Saves wifi informations to wpa_supplicant.'
 
@@ -175,6 +175,28 @@ class EducationalPurposesOnly(plugins.Plugin):
                         STATUS = 'rssi_low'
 
     def on_sleep(self, agent, t):
+        global READY
+        global STATUS
+        if READY == 1 and "Not-Associated" in os.popen('iwconfig wlan0').read():
+            potfile = _run("cat /root/handshakes/wpa-sec.cracked.potfile | awk -F: '{print $3 \":\" $4}'").splitlines()
+            pwned_networks = {}
+            for line in potfile:
+                network = line.split(":")
+                pwned_networks[network[0]] = network[1]
+            for network in self.access_points:
+                if network["hostname"] in pwned_networks:
+                    signal_strength = network["rssi"]
+                    channel = network["channel"]
+                    logging.info("[woop-woop] FOUND known network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
+                    if signal_strength >= -75:
+                        logging.info("[woop-woop] Starting association...")
+                        READY = 0
+                        self._connect_to_target_network(network['hostname'], channel)
+                    else:
+                        logging.info("[woop-woop] The signal strength is too low (%d) to connect." % (signal_strength))
+                        STATUS = 'rssi_low'
+
+    def on_wait(self, agent, t):
         global READY
         global STATUS
         if READY == 1 and "Not-Associated" in os.popen('iwconfig wlan0').read():
