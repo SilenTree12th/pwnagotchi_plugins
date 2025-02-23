@@ -9,7 +9,7 @@ import io
 
 class MyCrackedPasswords(plugins.Plugin):
     __author__ = '@silentree12th'
-    __version__ = '5.2.3'
+    __version__ = '5.2.4'
     __license__ = 'GPL3'
     __description__ = 'A plugin to grab all cracked passwords and creates wifi qrcodes and a wordlist which can be used for the quickdic plugin. It stores them in the home directory. Read with cat'
 
@@ -32,22 +32,21 @@ class MyCrackedPasswords(plugins.Plugin):
         all_bssid=[]
         all_ssid=[]
         
-        try:
-            f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+', encoding='utf-8')
-            for line_f in f:
+        f=open('/root/handshakes/wpa-sec.cracked.potfile', 'r+', encoding='utf-8')
+        for line_f in f:
+            try:
                 pwd_f = line_f.split(':')
                 all_passwd.append(str(pwd_f[-1].rstrip('\n')))
                 all_bssid.append(str(pwd_f[0]))
                 all_ssid.append(str(pwd_f[-2]))
-            f.close()
-        except Exception as e:
-            logging.error(f'[mycracked_pw] encountered a problem in wpa-sec.cracked.potfile:\n{e}')
+            except Exception as e:
+                logging.error(f'[mycracked_pw] encountered a problem in wpa-sec.cracked.potfile:\n{e}')
+        f.close()
         
         
-        
-        try:
-            h = open('/root/handshakes/onlinehashcrack.cracked', 'r+', encoding='utf-8')
-            for line_h in csv.DictReader(h):
+        h = open('/root/handshakes/onlinehashcrack.cracked', 'r+', encoding='utf-8')
+        for line_h in csv.DictReader(h):
+            try:
                 pwd_h = str(line_h['password'])
                 task_h = str(line_h['task'])
                 ssid_h = task_h[0:-20]
@@ -56,9 +55,9 @@ class MyCrackedPasswords(plugins.Plugin):
                     all_passwd.append(pwd_h)
                     all_bssid.append(bssid_h)
                     all_ssid.append(ssid_h)
-            h.close()
-        except Exception as e:
-            logging.error(f'[mycracked_pw] encountered a problem in onlinehashcrack.cracked:\n{e}')
+            except Exception as e:
+                logging.error(f'[mycracked_pw] encountered a problem in onlinehashcrack.cracked:\n{e}')
+        h.close()
         
         
         #save all the wifi-qrcodes
