@@ -1,0 +1,283 @@
+main.name = "pwnagotchi"
+main.lang = "en"
+main.confd = "/etc/pwnagotchi/conf.d/"
+main.custom_plugins = "/etc/pwnagotchi/"
+main.custom_plugin_repos = [
+ "https://github.com/evilsocket/pwnagotchi-plugins-contrib/archive/master.zip",
+ "https://github.com/dadav/pwnagotchi-custom-plugins/archive/master.zip",
+"https://github.com/SilenTree12th/pwnagotchi_plugins/archive/master.zip",
+]
+
+main.iface = "mon0"
+main.mon_start_cmd = "/usr/bin/monstart"
+main.mon_stop_cmd = "/usr/bin/monstop"
+main.mon_max_blind_epochs = 50
+main.no_restart = true
+main.whitelist = []
+
+main.filter = ""
+main.plugins.grid.enabled = true
+main.plugins.grid.report = true
+main.plugins.grid.exclude = []
+
+main.plugins.auto-update.enabled = true
+main.plugins.auto-update.install = true
+main.plugins.auto-update.interval = 1
+
+main.plugins.net-pos.enabled = true
+main.plugins.net-pos.api_key = "test"
+
+main.plugins.webgpsmap.enabled = true
+
+main.plugins.better_onlinehashcrack.enabled = false
+main.plugins.better_onlinehashcrack.email = ""
+main.plugins.better_onlinehashcrack.dashboard = "https://www.onlinehashcrack.com/{yourdashboard}"
+main.plugins.better_onlinehashcrack.single_files = true
+main.plugins.better_onlinehashcrack.whitelist = []
+
+main.plugins.wpa-sec.enabled = true
+main.plugins.wpa-sec.api_key = "{your api key}"
+main.plugins.wpa-sec.api_url = "https://wpa-sec.stanev.org"
+main.plugins.wpa-sec.download_results = true
+main.plugins.wpa-sec.whitelist = []
+
+main.plugins.hashie.enabled = true
+main.plugins.hashie.interval = 1
+
+main.plugins.bt-tether.enabled = true
+main.plugins.bt-tether.devices.android-phone.enabled = true
+main.plugins.bt-tether.devices.android-phone.search_order = 1
+main.plugins.bt-tether.devices.android-phone.mac = "{your android phone mac address}"
+main.plugins.bt-tether.devices.android-phone.ip = "192.168.44.44"
+main.plugins.bt-tether.devices.android-phone.netmask = 24
+main.plugins.bt-tether.devices.android-phone.interval = 1
+main.plugins.bt-tether.devices.android-phone.scantime = 1
+main.plugins.bt-tether.devices.android-phone.max_tries = 0
+main.plugins.bt-tether.devices.android-phone.share_internet = true
+main.plugins.bt-tether.devices.android-phone.priority = 1
+
+main.plugins.bt-tether.devices.ios-phone.enabled = false
+main.plugins.bt-tether.devices.ios-phone.search_order = 2
+main.plugins.bt-tether.devices.ios-phone.mac = ""
+main.plugins.bt-tether.devices.ios-phone.ip = "172.20.10.6"
+main.plugins.bt-tether.devices.ios-phone.netmask = 24
+main.plugins.bt-tether.devices.ios-phone.interval = 5
+main.plugins.bt-tether.devices.ios-phone.scantime = 20
+main.plugins.bt-tether.devices.ios-phone.max_tries = 0
+main.plugins.bt-tether.devices.ios-phone.share_internet = false
+main.plugins.bt-tether.devices.ios-phone.priority = 999
+
+main.plugins.memtemp.enabled = false
+main.plugins.memtemp.scale = "celsius"
+main.plugins.memtemp.orientation = "horizontal"
+
+main.plugins.paw-gps.enabled = false
+main.plugins.paw-gps.ip = ""
+
+main.plugins.led.enabled = true
+main.plugins.led.led = 0
+main.plugins.led.delay = 200
+main.plugins.led.patterns.loaded = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.updating = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.unread_inbox = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.ready = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.ai_ready = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.ai_training_start = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.ai_best_reward = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.ai_worst_reward = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.bored = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.sad = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.excited = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.lonely = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.rebooting = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.wait = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.sleep = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.wifi_update = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.association = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.deauthentication = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.handshake = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.epoch = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.peer_detected = "oo  oo  oo oo  oo  oo  oo"
+main.plugins.led.patterns.peer_lost = "oo  oo  oo oo  oo  oo  oo"
+
+main.plugins.logtail.enabled = true
+main.plugins.logtail.max-lines = 10000
+
+main.plugins.session-stats.enabled = false
+main.plugins.session-stats.save_directory = "/var/tmp/pwnagotchi/sessions/"
+
+main.plugins.webcfg.enabled = true
+
+main.plugins.watchdog.enabled = true
+
+main.plugins.better_quickdic.enabled = true
+main.plugins.better_quickdic.face = "(·ω·)"
+main.plugins.better_quickdic.wordlist_folder = "/home/pi/wordlists/"
+main.plugins.better_quickdic.api = "{telegram_bot_api}"
+main.plugins.better_quickdic.id = "{telegram_chat_id}"
+
+main.plugins.mycracked_pw.enabled = true
+main.plugins.mycracked_pw.face = "(uωu)"
+main.plugins.mycracked_pw.wordlist_folder = "/home/pi/wordlists/"
+
+main.plugins.deauth.enabled = true
+
+main.plugins.gps.enabled = false
+main.plugins.gps.speed = 19200
+main.plugins.gps.device = "/dev/ttyACM0"
+
+main.plugins.wigle.enabled = false
+main.plugins.wigle.api_key = ""
+main.plugins.wigle.whitelist = []
+main.plugins.wigle.donate = true
+
+main.plugins.gpio_buttons.enabled = false
+
+main.plugins.better_apfaker.enabled = false
+main.plugins.better_apfaker.ssids = [
+ "AndroidAP",
+ "iPhone",
+]
+main.plugins.better_apfaker.max = 1
+main.plugins.better_apfaker.repeat = false
+main.plugins.better_apfaker.password_protected = true
+main.plugins.better_apfaker.path = "/home/pi/apfaker/"
+
+main.plugins.display-password.enabled = true
+main.plugins.display-password.orientation = "horizontal"
+
+main.plugins.onlinehashcrack.enabled = false
+main.plugins.onlinehashcrack.email = ""
+main.plugins.onlinehashcrack.dashboard = ""
+main.plugins.onlinehashcrack.single_files = false
+main.plugins.onlinehashcrack.whitelist = []
+
+main.plugins.handshakes-dl.enabled = true
+
+main.plugins.better_hashie.enabled = false
+
+main.plugins.woop_woop.enabled = false
+
+main.log.path = "/var/log/pwnagotchi.log"
+main.log.rotation.enabled = true
+main.log.rotation.size = "10M"
+
+ai.enabled = true
+ai.path = "/root/brain.nn"
+ai.laziness = 0.1
+ai.epochs_per_episode = 50
+ai.params.gamma = 0.99
+ai.params.n_steps = 1
+ai.params.vf_coef = 0.25
+ai.params.ent_coef = 0.01
+ai.params.max_grad_norm = 0.5
+ai.params.learning_rate = 0.001
+ai.params.alpha = 0.99
+ai.params.epsilon = 1e-5
+ai.params.verbose = 1
+ai.params.lr_schedule = "constant"
+
+personality.advertise = true
+personality.deauth = true
+personality.associate = true
+personality.channels = [
+ 2,
+ 4,
+ 7,
+ 9,
+ 10,
+ 11,
+]
+personality.min_rssi = -158
+personality.ap_ttl = 230
+personality.sta_ttl = 68
+personality.recon_time = 34
+personality.max_inactive_scale = 5
+personality.recon_inactive_multiplier = 1
+personality.hop_recon_time = 27
+personality.min_recon_time = 15
+personality.max_interactions = 22
+personality.max_misses_for_recon = 9
+personality.excited_num_epochs = 12
+personality.bored_num_epochs = 17
+personality.sad_num_epochs = 21
+personality.bond_encounters_factor = 20000
+
+ui.fps = 0
+ui.font.name = "DejaVuSansMono"
+ui.font.size_offset = 0
+
+ui.faces.look_r = "( ⚆_⚆)"
+ui.faces.look_l = "(☉_☉ )"
+ui.faces.look_r_happy = "( ◕‿◕)"
+ui.faces.look_l_happy = "(◕‿◕ )"
+ui.faces.sleep = "(⇀‿‿↼)"
+ui.faces.sleep2 = "(≖‿‿≖)"
+ui.faces.awake = "(◕‿‿◕)"
+ui.faces.bored = "(-__-)"
+ui.faces.intense = "(°▃▃°)"
+ui.faces.cool = "(⌐■_■)"
+ui.faces.happy = "(•‿‿•)"
+ui.faces.excited = "(ᵔ◡◡ᵔ)"
+ui.faces.grateful = "(^‿‿^)"
+ui.faces.motivated = "(☼‿‿☼)"
+ui.faces.demotivated = "(≖__≖)"
+ui.faces.smart = "(✜‿‿✜)"
+ui.faces.lonely = "(ب__ب)"
+ui.faces.sad = "(╥☁╥ )"
+ui.faces.angry = "(-_-')"
+ui.faces.friend = "(♥‿‿♥)"
+ui.faces.broken = "(☓‿‿☓)"
+ui.faces.debug = "(#__#)"
+ui.faces.upload = "(1__0)"
+ui.faces.upload1 = "(1__1)"
+ui.faces.upload2 = "(0__1)"
+
+ui.web.enabled = true
+ui.web.address = "0.0.0.0"
+ui.web.username = "{your_username}"
+ui.web.password = "{your_password}"
+ui.web.origin = ""
+ui.web.port = 8080
+ui.web.on_frame = ""
+
+ui.display.enabled = false
+ui.display.rotation = 180
+ui.display.type = "waveshare_2"
+ui.display.color = "black"
+
+bettercap.scheme = "http"
+bettercap.hostname = "localhost"
+bettercap.port = 8081
+bettercap.username = "pwnagotchi"
+bettercap.password = "pwnagotchi"
+bettercap.handshakes = "/root/handshakes"
+bettercap.silence = [
+ "ble.device.new",
+ "ble.device.lost",
+ "ble.device.disconnected",
+ "ble.device.connected",
+ "ble.device.service.discovered",
+ "ble.device.characteristic.discovered",
+ "wifi.client.new",
+ "wifi.client.lost",
+ "wifi.client.probe",
+ "wifi.ap.new",
+ "wifi.ap.lost",
+ "mod.started",
+]
+
+fs.memory.enabled = true
+fs.memory.mounts.log.enabled = true
+fs.memory.mounts.log.mount = "/var/log"
+fs.memory.mounts.log.size = "50M"
+fs.memory.mounts.log.sync = 60
+fs.memory.mounts.log.zram = true
+fs.memory.mounts.log.rsync = true
+
+fs.memory.mounts.data.enabled = true
+fs.memory.mounts.data.mount = "/var/tmp/pwnagotchi"
+fs.memory.mounts.data.size = "10M"
+fs.memory.mounts.data.sync = 3600
+fs.memory.mounts.data.zram = true
+fs.memory.mounts.data.rsync = true
