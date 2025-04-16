@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 
 class OnlineHashCrack(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '3.0.0'
+    __version__ = '3.0.1'
     __license__ = 'GPL3'
     __description__ = 'This plugin automatically uploads handshakes to https://onlinehashcrack.com'
 
@@ -57,7 +57,7 @@ class OnlineHashCrack(plugins.Plugin):
                 "hashes": file_to_upload}
 
             try:
-                result = requests.post(url, json=data, headers=headers)
+                result = requests.post(url, json=data, headers=headers, timeout=timeout)
                 if 'already been sent' in result.text:
                     logging.debug(f"{path} was already uploaded.")
             except requests.exceptions.RequestException as e:
