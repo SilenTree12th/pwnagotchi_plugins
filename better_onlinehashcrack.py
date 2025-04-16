@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 
 class OnlineHashCrack(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '3.0.1'
+    __version__ = '3.1.0'
     __license__ = 'GPL3'
     __description__ = 'This plugin automatically uploads handshakes to https://onlinehashcrack.com'
 
@@ -48,13 +48,14 @@ class OnlineHashCrack(plugins.Plugin):
         Uploads the file to onlinehashcrack.com
         """
         with open(path, 'rb') as file_to_upload:
+            hash = extract_hash_from_pcap(file_to_upload)
             url = "https://api.onlinehashcrack.com/v2"
             headers = {"Content-Type": "application/json"}
             data = {
                 "api_key": self.options['api_key'],
                 "agree_terms": "yes",
                 "algo_mode": 22000,
-                "hashes": file_to_upload}
+                "hashes": hash}
 
             try:
                 result = requests.post(url, json=data, headers=headers, timeout=timeout)
@@ -154,3 +155,22 @@ class OnlineHashCrack(plugins.Plugin):
                                 if os.path.exists( os.path.join(handshake_dir, filename+'.pcap') ):
                                     with open(os.path.join(handshake_dir, filename+'.pcap.cracked'), 'w') as f:
                                         f.write(row['password'])
+
+    def extract_hash_from_pcap(pcap_file_path):
+        """
+        Extracts the hash from a .pcap file using hcxpcapngtool and returns it as a string.
+        """
+        try:
+            # Run hcxpcapngtool and capture the output
+            result = subprocess.run(
+                ['hcxpcapngtool', '-o', '-', pcap_file_path],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=True,
+                text=True
+            )
+            hash_output = result.stdout.strip()
+            return hash_output
+        except subprocess.CalledProcessError as e:
+            print(f"An error occurred: {e.stderr}")
+            return None
