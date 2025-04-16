@@ -12,7 +12,7 @@ from json.decoder import JSONDecodeError
 
 class OnlineHashCrack(plugins.Plugin):
     __author__ = 'silentree12th'
-    __version__ = '2.1.1'
+    __version__ = '3.0.0'
     __license__ = 'GPL3'
     __description__ = 'This plugin automatically uploads handshakes to https://onlinehashcrack.com'
 
@@ -36,9 +36,11 @@ class OnlineHashCrack(plugins.Plugin):
 
         if 'whitelist' not in self.options:
             self.options['whitelist'] = list()
+        if 'api_key' not in self.options:
+            logging.warning("OHC: API key not set. Found pw will only be received by e-mail.")
 
         self.ready = True
-        logging.info("OHC: OnlineHashCrack plugin loaded.")
+        logging.info("OHC: Better OnlineHashCrack plugin loaded.")
 
 
     def _upload_to_ohc(self, path, timeout=30):
@@ -46,14 +48,16 @@ class OnlineHashCrack(plugins.Plugin):
         Uploads the file to onlinehashcrack.com
         """
         with open(path, 'rb') as file_to_upload:
-            data = {'email': self.options['email']}
-            payload = {'file': file_to_upload}
+            url = "https://api.onlinehashcrack.com/v2"
+            headers = {"Content-Type": "application/json"}
+            data = {
+                "api_key": self.options['api_key'],
+                "agree_terms": "yes",
+                "algo_mode": 22000,
+                "hashes": file_to_upload}
 
             try:
-                result = requests.post('https://api.onlinehashcrack.com',
-                                       data=data,
-                                       files=payload,
-                                       timeout=timeout)
+                result = requests.post(url, json=data, headers=headers)
                 if 'already been sent' in result.text:
                     logging.debug(f"{path} was already uploaded.")
             except requests.exceptions.RequestException as e:
