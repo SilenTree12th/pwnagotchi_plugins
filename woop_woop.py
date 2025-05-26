@@ -13,8 +13,6 @@ import os
 import subprocess
 import requests
 import time
-from pwnagotchi.ai.reward import RewardFunction
-
 
 READY = 0
 STATUS = ''
